@@ -7,13 +7,10 @@
 //
 
 import Cocoa
-import Magnet
 
 class KeyEvent: NSObject {
 
     var appDelegate: AppDelegate!
-    // var keyCombo: KeyCombo!
-    // var hotKey: HotKey!
 
     static let showWindowKey: UInt16 = 48
     static let showWindowModifier: NSEventModifierFlags = [.shift]
@@ -22,10 +19,6 @@ class KeyEvent: NSObject {
         super.init()
 
         self.appDelegate = appDelegate
-
-        // keyCombo = KeyCombo(doubledCocoaModifiers: .command)
-        // hotKey = HotKey(identifier: "OpenWindow", keyCombo: keyCombo, target: self, action: #selector(show))
-        // hotKey.register()
 
         NSEvent.addGlobalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> Void in
             switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
