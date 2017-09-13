@@ -7,16 +7,16 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application">
+        <customObject id="-3" userLabel="Application" customClass="NSObject">
             <connections>
                 <outlet property="delegate" destination="6NN-yo-Y5t" id="nNj-14-JCh"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="6NN-yo-Y5t" customClass="AppDelegate" customModule="Mathemalpha" customModuleProvider="target"/>
-        <customObject id="jF1-eC-YaP" customClass="MenuCotroller" customModule="Mathemalpha" customModuleProvider="target">
+        <customObject id="jF1-eC-YaP" customClass="MainMenuController" customModule="Mathemalpha" customModuleProvider="target">
             <connections>
-                <outlet property="menu" destination="fsD-bF-tt6" id="TNE-cj-R7f"/>
+                <outlet property="menu" destination="fsD-bF-tt6" id="hWt-Fy-Qyd"/>
             </connections>
         </customObject>
         <menu id="fsD-bF-tt6">
@@ -24,7 +24,7 @@
                 <menuItem title="Quit Mathemalpha" id="9J6-ie-XsS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="terminate:" target="jF1-eC-YaP" id="hDy-ey-SlL"/>
+                        <action selector="terminate:" target="jF1-eC-YaP" id="2xn-bD-qen"/>
                     </connections>
                 </menuItem>
             </items>

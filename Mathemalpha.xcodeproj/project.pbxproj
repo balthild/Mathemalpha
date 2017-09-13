@@ -10,11 +10,29 @@
 		1E526CCF1F67BFDB00D5D797 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526CCE1F67BFDB00D5D797 /* AppDelegate.swift */; };
 		1E526CD31F67BFDB00D5D797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E526CD21F67BFDB00D5D797 /* Assets.xcassets */; };
 		1E526CDE1F67C93400D5D797 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E526CDD1F67C93400D5D797 /* MainMenu.xib */; };
-		1E526CE01F67CE8A00D5D797 /* MenuCotroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526CDF1F67CE8A00D5D797 /* MenuCotroller.swift */; };
+		1E526CE01F67CE8A00D5D797 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526CDF1F67CE8A00D5D797 /* MainMenuController.swift */; };
 		1E526CE21F67D5BE00D5D797 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1E526CE11F67D5BE00D5D797 /* README.md */; };
 		1E526CE41F67D5CF00D5D797 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 1E526CE31F67D5CF00D5D797 /* LICENSE */; };
 		1E526CE61F67DB8400D5D797 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1E526CE51F67DB8400D5D797 /* .gitignore */; };
+		1E526CFA1F67FA4700D5D797 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 1E526CF91F67FA4700D5D797 /* Cartfile */; };
+		1E526D001F68053F00D5D797 /* KeyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526CFF1F68053F00D5D797 /* KeyEvent.swift */; };
+		1E526D111F6828F600D5D797 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526D0F1F6828F600D5D797 /* MainWindowController.swift */; };
+		1E526D121F6828F600D5D797 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E526D101F6828F600D5D797 /* MainWindow.xib */; };
+		1E526D141F69466D00D5D797 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526D131F69466D00D5D797 /* VisualEffectView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1E526CFE1F67FB5B00D5D797 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1E526CCB1F67BFDB00D5D797 /* Mathemalpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mathemalpha.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,10 +40,15 @@
 		1E526CD21F67BFDB00D5D797 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E526CD71F67BFDB00D5D797 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E526CDD1F67C93400D5D797 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		1E526CDF1F67CE8A00D5D797 /* MenuCotroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCotroller.swift; sourceTree = "<group>"; };
+		1E526CDF1F67CE8A00D5D797 /* MainMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		1E526CE11F67D5BE00D5D797 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1E526CE31F67D5CF00D5D797 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1E526CE51F67DB8400D5D797 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		1E526CF91F67FA4700D5D797 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		1E526CFF1F68053F00D5D797 /* KeyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyEvent.swift; sourceTree = "<group>"; };
+		1E526D0F1F6828F600D5D797 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		1E526D101F6828F600D5D797 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		1E526D131F69466D00D5D797 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +65,7 @@
 		1E526CC21F67BFDB00D5D797 = {
 			isa = PBXGroup;
 			children = (
+				1E526CF91F67FA4700D5D797 /* Cartfile */,
 				1E526CE51F67DB8400D5D797 /* .gitignore */,
 				1E526CE31F67D5CF00D5D797 /* LICENSE */,
 				1E526CE11F67D5BE00D5D797 /* README.md */,
@@ -65,7 +89,11 @@
 				1E526CD21F67BFDB00D5D797 /* Assets.xcassets */,
 				1E526CD71F67BFDB00D5D797 /* Info.plist */,
 				1E526CDD1F67C93400D5D797 /* MainMenu.xib */,
-				1E526CDF1F67CE8A00D5D797 /* MenuCotroller.swift */,
+				1E526CDF1F67CE8A00D5D797 /* MainMenuController.swift */,
+				1E526CFF1F68053F00D5D797 /* KeyEvent.swift */,
+				1E526D0F1F6828F600D5D797 /* MainWindowController.swift */,
+				1E526D101F6828F600D5D797 /* MainWindow.xib */,
+				1E526D131F69466D00D5D797 /* VisualEffectView.swift */,
 			);
 			path = Mathemalpha;
 			sourceTree = "<group>";
@@ -80,6 +108,7 @@
 				1E526CC71F67BFDB00D5D797 /* Sources */,
 				1E526CC81F67BFDB00D5D797 /* Frameworks */,
 				1E526CC91F67BFDB00D5D797 /* Resources */,
+				1E526CFE1F67FB5B00D5D797 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,9 +158,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E526CFA1F67FA4700D5D797 /* Cartfile in Resources */,
 				1E526CE61F67DB8400D5D797 /* .gitignore in Resources */,
 				1E526CE41F67D5CF00D5D797 /* LICENSE in Resources */,
 				1E526CD31F67BFDB00D5D797 /* Assets.xcassets in Resources */,
+				1E526D121F6828F600D5D797 /* MainWindow.xib in Resources */,
 				1E526CDE1F67C93400D5D797 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,7 +176,10 @@
 			files = (
 				1E526CE21F67D5BE00D5D797 /* README.md in Sources */,
 				1E526CCF1F67BFDB00D5D797 /* AppDelegate.swift in Sources */,
-				1E526CE01F67CE8A00D5D797 /* MenuCotroller.swift in Sources */,
+				1E526CE01F67CE8A00D5D797 /* MainMenuController.swift in Sources */,
+				1E526D001F68053F00D5D797 /* KeyEvent.swift in Sources */,
+				1E526D111F6828F600D5D797 /* MainWindowController.swift in Sources */,
+				1E526D141F69466D00D5D797 /* VisualEffectView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +283,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Mathemalpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.balthild.Mathemalpha;
@@ -262,6 +300,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Mathemalpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.balthild.Mathemalpha;
