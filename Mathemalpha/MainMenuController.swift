@@ -10,6 +10,7 @@ import Cocoa
 
 class MainMenuController: NSObject {
 
+    @IBOutlet weak var appDelegate: AppDelegate!
     @IBOutlet weak var menu: NSMenu!
 
     var statusItem: NSStatusItem!
@@ -25,11 +26,15 @@ class MainMenuController: NSObject {
 
         statusItem.menu = menu
         statusItem.highlightMode = true
-
     }
 
     @IBAction func terminate(_ sender: NSMenuItem) {
         NSApp.terminate(self)
+    }
+
+    @IBAction func settings(_ sender: NSMenuItem) {
+        appDelegate.settingsWindowController.showWindow(self)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
 }

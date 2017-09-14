@@ -18,6 +18,15 @@
 		1E526D111F6828F600D5D797 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526D0F1F6828F600D5D797 /* MainWindowController.swift */; };
 		1E526D121F6828F600D5D797 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E526D101F6828F600D5D797 /* MainWindow.xib */; };
 		1E526D141F69466D00D5D797 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526D131F69466D00D5D797 /* VisualEffectView.swift */; };
+		1E526D171F6A9A9200D5D797 /* KeyHolder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E526D151F6A9A9200D5D797 /* KeyHolder.framework */; };
+		1E526D181F6A9A9200D5D797 /* KeyHolder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1E526D151F6A9A9200D5D797 /* KeyHolder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1E526D191F6A9A9200D5D797 /* Magnet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E526D161F6A9A9200D5D797 /* Magnet.framework */; };
+		1E526D1A1F6A9A9200D5D797 /* Magnet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1E526D161F6A9A9200D5D797 /* Magnet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1E526D1E1F6A9B1C00D5D797 /* KeyHolder.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1E526D1C1F6A9B1C00D5D797 /* KeyHolder.framework.dSYM */; };
+		1E526D1F1F6A9B1C00D5D797 /* Magnet.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1E526D1D1F6A9B1C00D5D797 /* Magnet.framework.dSYM */; };
+		1E526D221F6AA3E000D5D797 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E526D201F6AA3E000D5D797 /* SettingsWindowController.swift */; };
+		1E526D231F6AA3E000D5D797 /* SettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E526D211F6AA3E000D5D797 /* SettingsWindow.xib */; };
+		8E4E8BA4110F84671A3E5CFC /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 8E4E8A1DCAF0EF7242860E88 /* Cartfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +36,21 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				1E526D1A1F6A9A9200D5D797 /* Magnet.framework in Embed Frameworks */,
+				1E526D181F6A9A9200D5D797 /* KeyHolder.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E526D1B1F6A9AF900D5D797 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				1E526D1E1F6A9B1C00D5D797 /* KeyHolder.framework.dSYM in CopyFiles */,
+				1E526D1F1F6A9B1C00D5D797 /* Magnet.framework.dSYM in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -47,6 +69,13 @@
 		1E526D0F1F6828F600D5D797 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		1E526D101F6828F600D5D797 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		1E526D131F69466D00D5D797 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		1E526D151F6A9A9200D5D797 /* KeyHolder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeyHolder.framework; path = Carthage/Build/Mac/KeyHolder.framework; sourceTree = "<group>"; };
+		1E526D161F6A9A9200D5D797 /* Magnet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Magnet.framework; path = Carthage/Build/Mac/Magnet.framework; sourceTree = "<group>"; };
+		1E526D1C1F6A9B1C00D5D797 /* KeyHolder.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = KeyHolder.framework.dSYM; path = Carthage/Build/Mac/KeyHolder.framework.dSYM; sourceTree = "<group>"; };
+		1E526D1D1F6A9B1C00D5D797 /* Magnet.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Magnet.framework.dSYM; path = Carthage/Build/Mac/Magnet.framework.dSYM; sourceTree = "<group>"; };
+		1E526D201F6AA3E000D5D797 /* SettingsWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		1E526D211F6AA3E000D5D797 /* SettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsWindow.xib; sourceTree = "<group>"; };
+		8E4E8A1DCAF0EF7242860E88 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +83,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E526D191F6A9A9200D5D797 /* Magnet.framework in Frameworks */,
+				1E526D171F6A9A9200D5D797 /* KeyHolder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,11 +94,16 @@
 		1E526CC21F67BFDB00D5D797 = {
 			isa = PBXGroup;
 			children = (
+				1E526D1C1F6A9B1C00D5D797 /* KeyHolder.framework.dSYM */,
+				1E526D1D1F6A9B1C00D5D797 /* Magnet.framework.dSYM */,
+				1E526D151F6A9A9200D5D797 /* KeyHolder.framework */,
+				1E526D161F6A9A9200D5D797 /* Magnet.framework */,
 				1E526CE51F67DB8400D5D797 /* .gitignore */,
 				1E526CE31F67D5CF00D5D797 /* LICENSE */,
 				1E526CE11F67D5BE00D5D797 /* README.md */,
 				1E526CCD1F67BFDB00D5D797 /* Mathemalpha */,
 				1E526CCC1F67BFDB00D5D797 /* Products */,
+				8E4E8A1DCAF0EF7242860E88 /* Cartfile */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +127,8 @@
 				1E526D0F1F6828F600D5D797 /* MainWindowController.swift */,
 				1E526D101F6828F600D5D797 /* MainWindow.xib */,
 				1E526D131F69466D00D5D797 /* VisualEffectView.swift */,
+				1E526D201F6AA3E000D5D797 /* SettingsWindowController.swift */,
+				1E526D211F6AA3E000D5D797 /* SettingsWindow.xib */,
 			);
 			path = Mathemalpha;
 			sourceTree = "<group>";
@@ -106,6 +144,7 @@
 				1E526CC81F67BFDB00D5D797 /* Frameworks */,
 				1E526CC91F67BFDB00D5D797 /* Resources */,
 				1E526CFE1F67FB5B00D5D797 /* Embed Frameworks */,
+				1E526D1B1F6A9AF900D5D797 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -159,7 +198,9 @@
 				1E526CE41F67D5CF00D5D797 /* LICENSE in Resources */,
 				1E526CD31F67BFDB00D5D797 /* Assets.xcassets in Resources */,
 				1E526D121F6828F600D5D797 /* MainWindow.xib in Resources */,
+				1E526D231F6AA3E000D5D797 /* SettingsWindow.xib in Resources */,
 				1E526CDE1F67C93400D5D797 /* MainMenu.xib in Resources */,
+				8E4E8BA4110F84671A3E5CFC /* Cartfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E526CE21F67D5BE00D5D797 /* README.md in Sources */,
+				1E526D221F6AA3E000D5D797 /* SettingsWindowController.swift in Sources */,
 				1E526CCF1F67BFDB00D5D797 /* AppDelegate.swift in Sources */,
 				1E526CE01F67CE8A00D5D797 /* MainMenuController.swift in Sources */,
 				1E526D001F68053F00D5D797 /* KeyEvent.swift in Sources */,
@@ -285,6 +327,7 @@
 				);
 				INFOPLIST_FILE = Mathemalpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.balthild.Mathemalpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;

@@ -16,11 +16,18 @@
         <customObject id="6NN-yo-Y5t" customClass="AppDelegate" customModule="Mathemalpha" customModuleProvider="target"/>
         <customObject id="jF1-eC-YaP" customClass="MainMenuController" customModule="Mathemalpha" customModuleProvider="target">
             <connections>
+                <outlet property="appDelegate" destination="6NN-yo-Y5t" id="jPU-bm-Sfd"/>
                 <outlet property="menu" destination="fsD-bF-tt6" id="hWt-Fy-Qyd"/>
             </connections>
         </customObject>
         <menu id="fsD-bF-tt6">
             <items>
+                <menuItem title="Settings" id="sjE-yj-W9X" userLabel="Settings">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="settings:" target="jF1-eC-YaP" id="DMP-r4-gXY"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit Mathemalpha" id="9J6-ie-XsS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

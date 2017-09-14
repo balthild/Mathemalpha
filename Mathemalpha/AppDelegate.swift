@@ -13,16 +13,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var keyEvent: KeyEvent!
     var mainWindowController: MainWindowController!
-
-    override init() {
-        super.init()
-
-        mainWindowController = MainWindowController(windowNibName: "MainWindow")
-        keyEvent = KeyEvent(appDelegate: self)
-    }
+    var settingsWindowController: SettingsWindowController!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+
+        keyEvent = KeyEvent()
+        mainWindowController = MainWindowController(windowNibName: "MainWindow")
+        settingsWindowController = SettingsWindowController(windowNibName: "SettingsWindow")
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

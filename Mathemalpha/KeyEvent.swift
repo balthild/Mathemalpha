@@ -7,30 +7,26 @@
 //
 
 import Cocoa
+import Carbon.HIToolbox.Events
+import Magnet
+import KeyHolder
 
 class KeyEvent: NSObject {
 
-    var appDelegate: AppDelegate!
+    static let defaultKeyCode: Int = kVK_Space
+    static let defaultModifiers: NSEventModifierFlags = [.option, .command]
 
-    static let showWindowKey: UInt16 = 48
-    static let showWindowModifier: NSEventModifierFlags = [.shift]
+    let appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
 
-    init(appDelegate: AppDelegate) {
+    var keyCombo: KeyCombo!
+    var hotKey: HotKey!
+
+    override init() {
         super.init()
 
-        self.appDelegate = appDelegate
-
-        NSEvent.addGlobalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> Void in
-            switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
-            case (KeyEvent.showWindowKey, KeyEvent.showWindowModifier):
-                // Shift + Tab
-                self.appDelegate.mainWindowController.showAndOrderFront(self)
-
-            default:
-                // debugPrint(e)
-                break
-            }
-        })
+        keyCombo = KeyCombo(keyCode: KeyEvent.defaultKeyCode, cocoaModifiers: KeyEvent.defaultModifiers)
+        hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate, action: #selector(MainWindowController.showAndOrderFront))
+        hotKey.register()
 
         NSEvent.addLocalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> NSEvent? in
             switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
@@ -39,14 +35,54 @@ class KeyEvent: NSObject {
                 self.appDelegate.mainWindowController.close()
 
             default:
-                // debugPrint(e)
+#if DEBUG
+                    debugPrint(e)
+#endif
+
                 break
             }
 
-            return nil
+            return e
         })
 
-        // NSLog("Add local keyboard event listener")
+#if DEBUG
+            NSLog("Added local keyboard event listener")
+#endif
     }
 
+}
+
+extension KeyEvent: RecordViewDelegate {
+    func recordViewShouldBeginRecording(_ recordView: RecordView) -> Bool {
+        return true
+    }
+
+    func recordView(_ recordView: RecordView, canRecordKeyCombo keyCombo: KeyCombo) -> Bool {
+        // You can customize validation
+        return true
+    }
+
+    func recordViewDidClearShortcut(_ recordView: RecordView) {
+#if DEBUG
+        NSLog("Clear shortcut")
+#endif
+
+        HotKeyCenter.shared.unregisterHotKey(with: "ShowWindow")
+    }
+
+    func recordViewDidEndRecording(_ recordView: RecordView) {
+#if DEBUG
+        NSLog("End recording")
+#endif
+    }
+
+    func recordView(_ recordView: RecordView, didChangeKeyCombo keyCombo: KeyCombo) {
+#if DEBUG
+        NSLog("Recorded")
+#endif
+
+        HotKeyCenter.shared.unregisterHotKey(with: "ShowWindow")
+        let hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
+        hotKey.register()
+    }
 }
