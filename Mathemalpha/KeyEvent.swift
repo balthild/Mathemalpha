@@ -6,6 +6,7 @@
 //  Copyright © 2017 Balthild Ires. All rights reserved.
 //
 
+import CoreGraphics
 import Cocoa
 import Carbon.HIToolbox.Events
 import Magnet
@@ -18,35 +19,82 @@ class KeyEvent: NSObject {
 
     let appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
 
-    var keyCombo: KeyCombo!
     var hotKey: HotKey!
 
     override init() {
         super.init()
 
-        keyCombo = KeyCombo(keyCode: KeyEvent.defaultKeyCode, cocoaModifiers: KeyEvent.defaultModifiers)
-        hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate, action: #selector(MainWindowController.showAndOrderFront))
+        let keyCombo = KeyCombo(keyCode: KeyEvent.defaultKeyCode, cocoaModifiers: KeyEvent.defaultModifiers)
+        hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo!, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
         hotKey.register()
 
         NSEvent.addLocalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> NSEvent? in
             switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
-            case (53, _), (13, [.command]):
+            case (53, []), (13, [.command]):
                 // Esc, Cmd + W
                 self.appDelegate.mainWindowController.close()
 
+            case (49, []):
+                // Space
+                self.appDelegate.mainWindowController.close()
+                self.sendChar("ℳ");
+                self.appDelegate.mainWindowController.showAndOrderFront(self)
+
+            case (36, []):
+                // Enter
+                self.appDelegate.mainWindowController.close()
+                self.sendChar("ℳ");
+
+            case (51, []):
+                // Backspace
+                self.sendBackspace()
+
             default:
 #if DEBUG
-                    debugPrint(e)
-#endif
-
+                debugPrint(e)
+#else
                 break
+#endif
             }
 
             return e
         })
 
 #if DEBUG
-            NSLog("Added local keyboard event listener")
+        NSLog("Added local keyboard event listener")
+#endif
+    }
+
+    func sendChar(_ str: NSString) {
+        let e = CGEvent.init(keyboardEventSource: nil, virtualKey: 0, keyDown: true)
+
+        let chars: UnsafeMutablePointer<unichar> = UnsafeMutablePointer.allocate(capacity: 1)
+        str.getCharacters(chars)
+
+        e?.keyboardSetUnicodeString(stringLength: 1, unicodeString: chars)
+        e?.post(tap: .cghidEventTap)
+        e?.type = .keyUp
+        e?.post(tap: .cghidEventTap)
+
+#if DEBUG
+        NSLog("Sent the first character of text: %@", str)
+        debugPrint(Character(UnicodeScalar(chars.pointee)!))
+#endif
+    }
+
+    func sendBackspace() {
+        appDelegate.mainWindowController.close()
+
+        let e = CGEvent.init(keyboardEventSource: nil, virtualKey: 51, keyDown: true)
+
+        e?.post(tap: .cghidEventTap)
+        e?.type = .keyUp
+        e?.post(tap: .cghidEventTap)
+
+        appDelegate.mainWindowController.showAndOrderFront(self)
+
+#if DEBUG
+        NSLog("Sent a backspace")
 #endif
     }
 
@@ -67,7 +115,7 @@ extension KeyEvent: RecordViewDelegate {
         NSLog("Clear shortcut")
 #endif
 
-        HotKeyCenter.shared.unregisterHotKey(with: "ShowWindow")
+        hotKey.unregister()
     }
 
     func recordViewDidEndRecording(_ recordView: RecordView) {
@@ -81,8 +129,8 @@ extension KeyEvent: RecordViewDelegate {
         NSLog("Recorded")
 #endif
 
-        HotKeyCenter.shared.unregisterHotKey(with: "ShowWindow")
-        let hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
+        hotKey.unregister()
+        hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
         hotKey.register()
     }
 }

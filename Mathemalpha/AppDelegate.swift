@@ -18,9 +18,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
 
-        keyEvent = KeyEvent()
         mainWindowController = MainWindowController(windowNibName: "MainWindow")
         settingsWindowController = SettingsWindowController(windowNibName: "SettingsWindow")
+
+        keyEvent = KeyEvent()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
