@@ -17,6 +17,7 @@ class KeyEvent: NSObject {
     static let defaultKeyCode: Int = kVK_Space
     static let defaultModifiers: NSEventModifierFlags = [.option, .command]
 
+    let eventSource = CGEventSource(stateID: .privateState)
     let appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
 
     var hotKey: HotKey!
@@ -36,18 +37,21 @@ class KeyEvent: NSObject {
 
             case (49, []):
                 // Space
-                self.appDelegate.mainWindowController.close()
+                self.appDelegate.mainWindowController.window?.orderOut(self)
                 self.sendChar("ℳ");
-                self.appDelegate.mainWindowController.showAndOrderFront(self)
+                self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
 
             case (36, []):
                 // Enter
-                self.appDelegate.mainWindowController.close()
+                self.appDelegate.mainWindowController.window?.orderOut(self)
                 self.sendChar("ℳ");
 
             case (51, []):
                 // Backspace
+                self.appDelegate.mainWindowController.window?.orderOut(self)
                 self.sendBackspace()
+                self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+                debugPrint(e)
 
             default:
 #if DEBUG
@@ -66,7 +70,7 @@ class KeyEvent: NSObject {
     }
 
     func sendChar(_ str: NSString) {
-        let e = CGEvent.init(keyboardEventSource: nil, virtualKey: 0, keyDown: true)
+        let e = CGEvent.init(keyboardEventSource: eventSource, virtualKey: 0, keyDown: true)
 
         let chars: UnsafeMutablePointer<unichar> = UnsafeMutablePointer.allocate(capacity: 1)
         str.getCharacters(chars)
@@ -83,15 +87,11 @@ class KeyEvent: NSObject {
     }
 
     func sendBackspace() {
-        appDelegate.mainWindowController.close()
-
-        let e = CGEvent.init(keyboardEventSource: nil, virtualKey: 51, keyDown: true)
+        let e = CGEvent.init(keyboardEventSource: eventSource, virtualKey: 51, keyDown: true)
 
         e?.post(tap: .cghidEventTap)
         e?.type = .keyUp
         e?.post(tap: .cghidEventTap)
-
-        appDelegate.mainWindowController.showAndOrderFront(self)
 
 #if DEBUG
         NSLog("Sent a backspace")
