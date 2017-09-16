@@ -30,6 +30,10 @@ class KeyEvent: NSObject {
         hotKey.register()
 
         NSEvent.addLocalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> NSEvent? in
+            if e.isARepeat {
+                return e
+            }
+
             switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
             case (53, []), (13, [.command]):
                 // Esc, Cmd + W
@@ -51,7 +55,6 @@ class KeyEvent: NSObject {
                 self.appDelegate.mainWindowController.window?.orderOut(self)
                 self.sendBackspace()
                 self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
-                debugPrint(e)
 
             default:
 #if DEBUG
