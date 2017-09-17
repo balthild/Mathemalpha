@@ -26,47 +26,53 @@ class KeyEvent: NSObject {
         hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
         hotKey.register()
 
-        NSEvent.addLocalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> NSEvent? in
-            if e.isARepeat {
-                return e
-            }
-
-            switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
-            case (53, []), (13, [.command]):
-                // Esc, Cmd + W
-                self.appDelegate.mainWindowController.close()
-
-            case (49, []):
-                // Space
-                self.appDelegate.mainWindowController.window?.orderOut(self)
-                self.sendChar("ℳ");
-                self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
-
-            case (36, []):
-                // Enter
-                self.appDelegate.mainWindowController.window?.orderOut(self)
-                self.sendChar("ℳ");
-
-            case (51, []):
-                // Backspace
-                self.appDelegate.mainWindowController.window?.orderOut(self)
-                self.sendBackspace()
-                self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
-
-            default:
-#if DEBUG
-                debugPrint(e)
-#else
-                break
-#endif
-            }
-
-            return e
-        })
+        NSEvent.addLocalMonitorForEvents(matching: NSEventMask.keyDown, handler: keyPressed)
 
 #if DEBUG
         NSLog("Added local keyboard event listener")
 #endif
+    }
+
+    func keyPressed(e: NSEvent) -> NSEvent? {
+        if e.isARepeat || !appDelegate.mainWindowController.shouldHandleKeyEvent {
+            return e
+        }
+
+        switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
+        case (53, []), (13, [.command]):
+            // Esc, Cmd + W
+            self.appDelegate.mainWindowController.close()
+
+
+        case (49, []):
+            // Space
+
+            // We must temporarily hide the window before sending a key event, otherwise
+            // the event will be sent to the window itself, which is not expected to
+            self.appDelegate.mainWindowController.window?.orderOut(self)
+            self.sendChar("ℳ");
+            self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+
+        case (36, []):
+            // Enter
+            self.appDelegate.mainWindowController.hide(self)
+            self.sendChar("ℳ");
+
+        case (51, []):
+            // Backspace
+            self.appDelegate.mainWindowController.window?.orderOut(self)
+            self.sendBackspace()
+            self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+
+        default:
+#if DEBUG
+            debugPrint(e)
+#else
+            break
+#endif
+        }
+
+        return e
     }
 
     func sendChar(_ str: NSString) {

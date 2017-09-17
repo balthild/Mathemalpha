@@ -10,6 +10,8 @@ import Cocoa
 
 class MainWindowController: NSWindowController {
 
+    var shouldHandleKeyEvent: Bool = false
+
     override func windowDidLoad() {
         super.windowDidLoad()
 
@@ -17,6 +19,15 @@ class MainWindowController: NSWindowController {
 
         window?.isMovableByWindowBackground = true
         window?.titlebarAppearsTransparent = true
+
+        // See KeyEvent.keyPressed @ case (49, []) in KeyEvent.swift
+        window?.animationBehavior = .none
+    }
+
+    func hide(_ sender: Any?) {
+        window?.orderOut(sender)
+
+        shouldHandleKeyEvent = false
     }
 
     func showAndOrderFront(_ sender: Any?) {
@@ -24,6 +35,8 @@ class MainWindowController: NSWindowController {
 
         window?.orderFrontRegardless()
         window?.makeKeyAndOrderFront(sender)
+
+        shouldHandleKeyEvent = true
     }
 
 }
