@@ -14,9 +14,6 @@ import KeyHolder
 
 class KeyEvent: NSObject {
 
-    static let defaultKeyCode: Int = kVK_Space
-    static let defaultModifiers: NSEventModifierFlags = [.option, .command]
-
     let eventSource = CGEventSource(stateID: .privateState)
     let appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
 
@@ -25,8 +22,8 @@ class KeyEvent: NSObject {
     override init() {
         super.init()
 
-        let keyCombo = KeyCombo(keyCode: KeyEvent.defaultKeyCode, cocoaModifiers: KeyEvent.defaultModifiers)
-        hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo!, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
+        let keyCombo = KeyEvent.getDefaultKeyCombo()
+        hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
         hotKey.register()
 
         NSEvent.addLocalMonitorForEvents(matching: NSEventMask.keyDown, handler: {(e: NSEvent) -> NSEvent? in
@@ -101,9 +98,19 @@ class KeyEvent: NSObject {
 #endif
     }
 
+    static func getDefaultKeyCombo() -> KeyCombo {
+        if let data = UserDefaults.standard.data(forKey: "keyCombo"), let keyCombo = NSKeyedUnarchiver.unarchiveObject(with: data) as? KeyCombo {
+            return keyCombo
+        } else {
+            // Default is Option + Cmd + Space
+            return KeyCombo(keyCode: 49, cocoaModifiers: [.option, .command])!
+        }
+    }
+
 }
 
 extension KeyEvent: RecordViewDelegate {
+
     func recordViewShouldBeginRecording(_ recordView: RecordView) -> Bool {
         return true
     }
@@ -135,5 +142,12 @@ extension KeyEvent: RecordViewDelegate {
         hotKey.unregister()
         hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
         hotKey.register()
+
+        DispatchQueue.main.async {
+            let data = NSKeyedArchiver.archivedData(withRootObject: keyCombo)
+            UserDefaults.standard.set(data, forKey: "keyCombo")
+            UserDefaults.standard.synchronize()
+        }
     }
+
 }

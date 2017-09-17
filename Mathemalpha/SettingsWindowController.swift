@@ -19,7 +19,7 @@ class SettingsWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 
-        recordView.keyCombo = KeyCombo(keyCode: KeyEvent.defaultKeyCode, cocoaModifiers: KeyEvent.defaultModifiers)
+        recordView.keyCombo = KeyEvent.getDefaultKeyCombo()
         recordView.delegate = appDelegate.keyEvent
 
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
