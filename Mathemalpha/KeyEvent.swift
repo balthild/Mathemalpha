@@ -34,61 +34,78 @@ class KeyEvent: NSObject {
     }
 
     func keyPressed(e: NSEvent) -> NSEvent? {
-        if e.isARepeat || !appDelegate.mainWindowController.shouldHandleKeyEvent {
+        if !appDelegate.mainWindowController.shouldHandleKeyEvent {
             return e
         }
+
+        var allowRepeat = false
+        var handler: () -> Void = {}
 
         switch (e.keyCode, e.modifierFlags.intersection(.deviceIndependentFlagsMask)) {
         case (53, []), (13, [.command]):
             // Esc, Cmd + W
-            self.appDelegate.mainWindowController.close()
-
+            handler = self.appDelegate.mainWindowController.close
 
         case (49, []):
             // Space
-
-            // We must temporarily hide the window before sending a key event, otherwise
-            // the event will be sent to the window itself, which is not expected to
-            self.appDelegate.mainWindowController.window?.orderOut(self)
-            self.sendChar("ℳ");
-            self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+            handler = {
+                // We must temporarily hide the window before sending a key event, otherwise
+                // the event will be sent to the window itself, which is not expected to
+                self.appDelegate.mainWindowController.window?.orderOut(self)
+                self.sendChar(self.appDelegate.mainWindowController.getCurrentChar());
+                self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+            }
 
         case (36, []):
             // Enter
-            self.appDelegate.mainWindowController.hide(self)
-            self.sendChar("ℳ");
+            handler = {
+                self.appDelegate.mainWindowController.hide(self)
+                self.sendChar(self.appDelegate.mainWindowController.getCurrentChar());
+            }
 
         case (51, []):
             // Backspace
-            self.appDelegate.mainWindowController.window?.orderOut(self)
-            self.sendBackspace()
-            self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+            handler = {
+                self.appDelegate.mainWindowController.window?.orderOut(self)
+                self.sendBackspace()
+                self.appDelegate.mainWindowController.window?.makeKeyAndOrderFront(self)
+            }
+
+        case (123...126, _):
+            // Arrows
+            allowRepeat = true
+            handler = {
+                self.appDelegate.mainWindowController.changeHighlightCharacter(e.keyCode)
+            }
 
         default:
 #if DEBUG
             debugPrint(e)
-#else
-            break
 #endif
+            return e
+        }
+
+        if allowRepeat || !e.isARepeat {
+            handler()
         }
 
         return e
     }
 
-    func sendChar(_ str: NSString) {
-        let e = CGEvent.init(keyboardEventSource: eventSource, virtualKey: 0, keyDown: true)
+    func sendChar(_ char: Character) {
+        let event = CGEvent.init(keyboardEventSource: eventSource, virtualKey: 0, keyDown: true)
+        let str = NSString(string: String(char))
+        let unicode: UnsafeMutablePointer<unichar> = UnsafeMutablePointer.allocate(capacity: str.length)
 
-        let chars: UnsafeMutablePointer<unichar> = UnsafeMutablePointer.allocate(capacity: 1)
-        str.getCharacters(chars)
+        str.getCharacters(unicode)
 
-        e?.keyboardSetUnicodeString(stringLength: 1, unicodeString: chars)
-        e?.post(tap: .cghidEventTap)
-        e?.type = .keyUp
-        e?.post(tap: .cghidEventTap)
+        event?.keyboardSetUnicodeString(stringLength: str.length, unicodeString: unicode)
+        event?.post(tap: .cghidEventTap)
+        event?.type = .keyUp
+        event?.post(tap: .cghidEventTap)
 
 #if DEBUG
-        NSLog("Sent the first character of text: %@", str)
-        debugPrint(Character(UnicodeScalar(chars.pointee)!))
+        NSLog("Sent a character: %@", str)
 #endif
     }
 

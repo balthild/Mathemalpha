@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController" customModule="Mathemalpha" customModuleProvider="target">
             <connections>
+                <outlet property="charactersScrollView" destination="PHb-ov-TBW" id="hOB-Xg-hru"/>
+                <outlet property="charactersView" destination="95q-ga-6b2" id="Fak-EZ-dMx"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -16,11 +18,57 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" utility="YES" nonactivatingPanel="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="320" width="480" height="320"/>
+            <rect key="contentRect" x="196" y="320" width="550" height="350"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO" customClass="VisualEffectView" customModule="Mathemalpha" customModuleProvider="target">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                <rect key="frame" x="0.0" y="0.0" width="550" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHb-ov-TBW">
+                        <rect key="frame" x="190" y="20" width="340" height="310"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="sqA-HR-c09" customClass="FlippedClipView" customModule="Mathemalpha" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="340" height="310"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="95q-ga-6b2" customClass="CharactersView" customModule="Mathemalpha" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="325" height="295"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="YO0-wx-1SG">
+                            <rect key="frame" x="-100" y="-100" width="318" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="pU1-i9-GJb" customClass="TransparentScroller" customModule="Mathemalpha" customModuleProvider="target">
+                            <rect key="frame" x="325" y="0.0" width="15" height="310"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <scrollView wantsLayer="YES" fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dK5-4i-luJ">
+                        <rect key="frame" x="20" y="20" width="162" height="310"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="jLQ-mR-zNP" customClass="FlippedClipView" customModule="Mathemalpha" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="162" height="310"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0C-62-txK" customClass="SchemesView" customModule="Mathemalpha" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="147" height="295"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="7a9-a8-wPS">
+                            <rect key="frame" x="-100" y="-100" width="126" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="WyI-L1-6xO" customClass="TransparentScroller" customModule="Mathemalpha" customModuleProvider="target">
+                            <rect key="frame" x="127" y="1" width="15" height="308"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </subviews>
             </view>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="boolean" keyPath="isFloatingPanel" value="YES"/>
