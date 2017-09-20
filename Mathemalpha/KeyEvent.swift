@@ -12,16 +12,16 @@ import Carbon.HIToolbox.Events
 import Magnet
 import KeyHolder
 
-class KeyEvent: NSObject {
+final class KeyEvent {
+
+    fileprivate(set) static var instance: KeyEvent!
 
     let eventSource = CGEventSource(stateID: .privateState)
     let appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
 
     var hotKey: HotKey!
 
-    override init() {
-        super.init()
-
+    fileprivate init() {
         let keyCombo = KeyEvent.getDefaultKeyCombo()
         hotKey = HotKey(identifier: "ShowWindow", keyCombo: keyCombo, target: appDelegate.mainWindowController, action: #selector(MainWindowController.showAndOrderFront))
         hotKey.register()
@@ -75,8 +75,12 @@ class KeyEvent: NSObject {
             // Arrows
             allowRepeat = true
             handler = {
-                self.appDelegate.mainWindowController.changeHighlightCharacter(e.keyCode)
+                self.appDelegate.mainWindowController.navigate(e.keyCode)
             }
+
+        case (48, []):
+            // Tab
+            handler = self.appDelegate.mainWindowController.flipFocused
 
         default:
 #if DEBUG
@@ -110,11 +114,11 @@ class KeyEvent: NSObject {
     }
 
     func sendBackspace() {
-        let e = CGEvent.init(keyboardEventSource: eventSource, virtualKey: 51, keyDown: true)
+        let event = CGEvent.init(keyboardEventSource: eventSource, virtualKey: 51, keyDown: true)
 
-        e?.post(tap: .cghidEventTap)
-        e?.type = .keyUp
-        e?.post(tap: .cghidEventTap)
+        event?.post(tap: .cghidEventTap)
+        event?.type = .keyUp
+        event?.post(tap: .cghidEventTap)
 
 #if DEBUG
         NSLog("Sent a backspace")
@@ -171,6 +175,14 @@ extension KeyEvent: RecordViewDelegate {
             UserDefaults.standard.set(data, forKey: "keyCombo")
             UserDefaults.standard.synchronize()
         }
+    }
+
+    static func initialize() {
+        instance = KeyEvent()
+    }
+
+    static func stop() {
+        instance.hotKey.unregister()
     }
 
 }

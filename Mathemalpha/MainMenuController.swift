@@ -18,7 +18,7 @@ class MainMenuController: NSObject {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        statusItem = NSStatusBar.system().statusItem(withLength: 24)
+        statusItem = NSStatusBar.system().statusItem(withLength: 28)
 
         statusItem.image = NSImage(named: "StatusIcon")
         statusItem.image?.size = NSSize(width: 18, height: 18)

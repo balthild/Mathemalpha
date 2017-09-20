@@ -10,16 +10,20 @@ import Cocoa
 
 class MainWindowController: NSWindowController {
 
-    @IBOutlet weak var charactersScrollView: NSScrollView!
-    @IBOutlet weak var charactersView: CharactersView!
+    @IBOutlet weak var schemesView: SchemesView!
+    @IBOutlet weak var schemesScrollView: NSScrollView!
+    @IBOutlet weak var collectionView: NSCollectionView!
 
     var shouldHandleKeyEvent: Bool = false
-    var charactersAreaHeight: CGFloat!
+    var switchingSchemes: Bool = false
+    var schemesAreaHeight: CGFloat!
+
+    var currentScheme: Array<String> = Schemes.schemes[0]
+    var selectedCharacter: (Int, Int) = (0, 0)
+    var schemeBeforeFlip: Int?
 
     override func windowDidLoad() {
         super.windowDidLoad()
-
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 
         window?.isMovableByWindowBackground = true
         window?.titlebarAppearsTransparent = true
@@ -27,7 +31,13 @@ class MainWindowController: NSWindowController {
         // See KeyEvent.keyPressed @ case (49, []) in KeyEvent.swift
         window?.animationBehavior = .none
 
-        charactersAreaHeight = charactersScrollView.frame.size.height
+        schemesAreaHeight = schemesScrollView.frame.size.height
+
+        let nib = NSNib(nibNamed: "CharacterItem", bundle: nil)
+        collectionView.register(nib, forItemWithIdentifier: "CharacterItem")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.selectItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)
     }
 
     func hide(_ sender: Any?) {
@@ -45,106 +55,104 @@ class MainWindowController: NSWindowController {
         shouldHandleKeyEvent = true
     }
 
-    func changeHighlightCharacter(_ keyCode: UInt16) {
-        let sections = charactersView.sections
-        let lastSection = sections.count - 1
-        var (section, index) = charactersView.highlight
+    func flipFocused() {
+        Styles.flipFocused()
+        switchingSchemes = !switchingSchemes
+
+        if switchingSchemes {
+            schemeBeforeFlip = schemesView.selected
+            collectionView.deselectAll(self)
+        } else {
+            if schemeBeforeFlip == schemesView.selected {
+                collectionView.selectItems(at: [IndexPath(item: selectedCharacter.1, section: selectedCharacter.0)], scrollPosition: .top)
+            } else {
+                collectionView.selectItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)
+            }
+
+            schemeBeforeFlip = nil
+        }
+
+        schemesView.needsDisplay = true
+        for path in collectionView.selectionIndexPaths {
+            collectionView.item(at: path)?.view.needsDisplay = true
+        }
+    }
+
+    func navigate(_ keyCode: UInt16) {
+        if switchingSchemes {
+            changeSelectedScheme(keyCode)
+        }
+    }
+
+    func changeSelectedScheme(_ keyCode: UInt16) {
+        let lastScheme = Schemes.schemes.count - 1
+        var selected = schemesView.selected
 
         switch keyCode {
-        case 123:
-            // Left
-            if index == 0 && section > 0 {
-                // Go to previous section
-                section -= 1
-                index = sections[section].characters.count - 1
-            } else if index > 0 {
-                index -= 1
-            }
-
-        case 124:
-            // Right
-            if index == sections[section].characters.count - 1 && section < lastSection {
-                // Go to next section
-                section += 1
-                index = 0
-            } else if index < sections[section].characters.count - 1 {
-                index += 1
-            }
-
         case 125:
             // Down
-            let remainder = sections[section].characters.count % 10
-            if remainder == 0 || sections[section].characters.count - index <= remainder {
-                if section < lastSection {
-                    // Go to next section
-                    section += 1
-                    index = index % 10
-                } else {
-                    // Go to the end
-                    index = sections[section].characters.count - 1
-                }
+            if selected < lastScheme {
+                selected += 1
             } else {
-                // Go to next line
-                index += 10
-            }
-
-            if index >= sections[section].characters.count {
-                index = sections[section].characters.count - 1
+                return
             }
 
         case 126:
             // Up
-            if index < 10 && section > 0 {
-                // Go to previous section
-                section -= 1
-                index += sections[section].characters.count / 10 * 10
-
-                if sections[section].characters.count % 10 == 0 {
-                    index -= 10
-                }
-
-                if index >= sections[section].characters.count {
-                    index = sections[section].characters.count - 1
-                }
-            } else if index >= 10 {
-                index -= 10
+            if selected > 0 {
+                selected -= 1
+            } else {
+                return
             }
 
         default:
-            // Unreachable
-            break
+            // Left or right
+            return
         }
 
-        charactersView.highlight = (section, index)
+        currentScheme = Schemes.schemes[selected]
 
-        // Scroll to the highlighted character
-        var y: Int = 0
-        for i in 0..<section {
-            y += (sections[i].characters.count - 1) / 10 * 32 + 40
-        }
-        y += index / 10 * 32
+        schemesView.selected = selected
+        schemesView.needsDisplay = true
 
-        let scrollY = charactersScrollView.contentView.documentVisibleRect.origin.y
-        let floatY = CGFloat(y)
-
-        if floatY - scrollY > charactersAreaHeight - 64 {
-            charactersScrollView.documentView?.scroll(NSMakePoint(0, floatY + 64 - charactersAreaHeight))
-        } else if floatY - scrollY < 32 {
-            charactersScrollView.documentView?.scroll(NSMakePoint(0, floatY - 32))
-        }
-
-        reDraw()
-    }
-
-    func reDraw() {
-        charactersView.needsDisplay = true
+        collectionView.reloadData()
+        collectionView.deselectAll(self)
+        collectionView.needsDisplay = true
     }
 
     func getCurrentChar() -> Character {
-        let (s, i) = charactersView.highlight
-        let section = charactersView.sections[s]
+        let section = currentScheme[selectedCharacter.0]
 
-        return section[section.index(section.startIndex, offsetBy: i)]
+        return section[section.index(section.startIndex, offsetBy: selectedCharacter.1)]
+    }
+
+}
+
+extension MainWindowController: NSCollectionViewDelegate, NSCollectionViewDataSource {
+    func numberOfSections(in collectionView: NSCollectionView) -> Int {
+        return currentScheme.count
+    }
+
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        return currentScheme[section].characters.count
+    }
+
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        let section = currentScheme[indexPath.section]
+        let item = self.collectionView.makeItem(withIdentifier: "CharacterItem", for: indexPath)
+
+        item.representedObject = section[section.index(section.startIndex, offsetBy: indexPath.item)]
+
+        return item
+    }
+
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        for path in collectionView.selectionIndexPaths {
+            selectedCharacter = (path.section, path.item)
+            return
+        }
+
+        selectedCharacter = (0, 0)
     }
 
 }

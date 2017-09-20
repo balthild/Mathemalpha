@@ -18,14 +18,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
 
+        Schemes.load()
+
         mainWindowController = MainWindowController(windowNibName: "MainWindow")
         settingsWindowController = SettingsWindowController(windowNibName: "SettingsWindow")
 
-        keyEvent = KeyEvent()
+        KeyEvent.initialize()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+
+        KeyEvent.stop()
     }
 
 }
