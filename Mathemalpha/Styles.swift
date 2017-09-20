@@ -11,12 +11,13 @@ import Cocoa
 final class Styles {
 
     private static let schemesFont = NSFont.systemFont(ofSize: 14)
-    private static let charactersFont = NSFont(name: "Symbol", size: 18)
+    private static let charactersFont = NSFont(name: "STIXGeneral", size: 18)
     private static let textColor = NSColor(white: 0, alpha: 1)
     private static let textStyle: NSMutableParagraphStyle = {
         let textStyle = NSMutableParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
         textStyle.alignment = .center
         return textStyle
+
     }()
 
     static let schemesTextAttributes: [String : Any] = [

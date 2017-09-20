@@ -18,7 +18,7 @@ class CharacterItemView: NSView {
 
         let string = NSString(string: String(char!))
         let textHeight = string.size(withAttributes: Styles.charactersTextAttributes).height
-        let textRect = NSMakeRect(0, (32 - textHeight) / 2, 32, textHeight)
+        let textRect = NSMakeRect(0, (36 - textHeight) / 2, 32, textHeight)
 
         if selected {
             let tileRect = NSMakeRect(0, 0, 32, 32)
