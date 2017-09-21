@@ -28,6 +28,18 @@
                         <action selector="settings:" target="jF1-eC-YaP" id="DMP-r4-gXY"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Edit Schemes" id="GKA-CY-hES">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="edit:" target="jF1-eC-YaP" id="xhT-3U-IYR"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Reload Schemes" id="rn9-JA-bZP">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="reload:" target="jF1-eC-YaP" id="Vsc-hp-tzu"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit Mathemalpha" id="9J6-ie-XsS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

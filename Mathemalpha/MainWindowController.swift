@@ -64,7 +64,7 @@ class MainWindowController: NSWindowController {
             collectionView.deselectAll(self)
         } else {
             if schemeBeforeFlip == schemesView.selected {
-                collectionView.selectItems(at: [IndexPath(item: selectedCharacter.1, section: selectedCharacter.0)], scrollPosition: .top)
+                collectionView.selectItems(at: [IndexPath(item: selectedCharacter.1, section: selectedCharacter.0)], scrollPosition: .nearestHorizontalEdge)
             } else {
                 collectionView.selectItems(at: [IndexPath(item: 0, section: 0)], scrollPosition: .top)
             }

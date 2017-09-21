@@ -32,6 +32,22 @@ class MainMenuController: NSObject {
         NSApp.terminate(self)
     }
 
+    @IBAction func reload(_ sender: NSMenuItem) {
+        Schemes.load()
+
+        appDelegate.mainWindowController.currentScheme = Schemes.schemes[0]
+        appDelegate.mainWindowController.schemesView.selected = 0
+        appDelegate.mainWindowController.schemesView.needsDisplay = true
+
+        appDelegate.mainWindowController.collectionView.reloadData()
+        appDelegate.mainWindowController.collectionView.deselectAll(self)
+        appDelegate.mainWindowController.collectionView.needsDisplay = true
+    }
+
+    @IBAction func edit(_ sender: NSMenuItem) {
+        NSWorkspace.shared().openFile(Schemes.baseDir)
+    }
+
     @IBAction func settings(_ sender: NSMenuItem) {
         appDelegate.settingsWindowController.showWindow(self)
         NSApp.activate(ignoringOtherApps: true)

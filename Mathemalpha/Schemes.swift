@@ -10,7 +10,7 @@ import Cocoa
 
 final class Schemes {
 
-    private static let baseDir = NSHomeDirectory() + "/Library/Application Support/Mathemalpha"
+    static let baseDir = NSHomeDirectory() + "/Library/Application Support/Mathemalpha"
 
     private(set) static var schemeNames: Array<String> = []
     private(set) static var schemes: Array<Array<String>> = []
@@ -33,6 +33,9 @@ final class Schemes {
     }
 
     private static func readSchemes() {
+        var newSchemeNames: Array<String> = []
+        var newSchemes: Array<Array<String>> = []
+
         do {
             let schemesConfig = try String(contentsOfFile: baseDir + "/schemes.txt")
 
@@ -60,8 +63,8 @@ final class Schemes {
                 do {
                     let scheme = try String(contentsOfFile: baseDir + "/schemes/" + file)
 
-                    schemes.append(scheme.components(separatedBy: "\n").map({ $0.trimmingCharacters(in: .whitespaces) }).filter({ !$0.isEmpty }))
-                    schemeNames.append(name)
+                    newSchemes.append(scheme.components(separatedBy: "\n").map({ $0.trimmingCharacters(in: .whitespaces) }).filter({ !$0.isEmpty }))
+                    newSchemeNames.append(name)
                 } catch {
                     NSLog("Error while loading " + file)
                     continue
@@ -74,6 +77,9 @@ final class Schemes {
             debugPrint(error)
             NSApp.terminate(self)
         }
+
+        schemes = newSchemes
+        schemeNames = newSchemeNames
     }
 
     private static func createDefaultSchemes() {
