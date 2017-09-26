@@ -36,6 +36,8 @@ final class Schemes {
         var newSchemeNames: Array<String> = []
         var newSchemes: Array<Array<String>> = []
 
+        var msg = ""
+
         do {
             let schemesConfig = try String(contentsOfFile: baseDir + "/schemes.txt")
 
@@ -70,12 +72,19 @@ final class Schemes {
                     continue
                 }
             }
+
+            msg = "No Schemes"
         } catch let e as ParseError {
             NSLog(e.message)
-            NSApp.terminate(self)
+            msg = "Parse Error"
         } catch {
             debugPrint(error)
-            NSApp.terminate(self)
+            msg = "Unknown Error"
+        }
+
+        if newSchemes.isEmpty {
+            newSchemeNames.append(msg)
+            newSchemes.append(["π"])
         }
 
         schemes = newSchemes
@@ -86,10 +95,15 @@ final class Schemes {
         do {
             try FileManager.default.createDirectory(atPath: baseDir + "/schemes", withIntermediateDirectories: true)
 
-            // TODO
+            let schemesConfig = NSDataAsset(name: "schemes.txt")!
+            try schemesConfig.data.write(to: URL(fileURLWithPath: baseDir + "/schemes.txt"))
+
+            for name in ["math.txt", "hellenic.txt", "cyrillic.txt", "latin.txt"] {
+                let schemeFile = NSDataAsset(name: name)!
+                try schemeFile.data.write(to: URL(fileURLWithPath: baseDir + "/schemes/" + name))
+            }
         } catch {
             debugPrint(error)
-            NSApp.terminate(self)
         }
     }
 }
